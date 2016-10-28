@@ -43,24 +43,30 @@ def stochastic_gradient_descent(
     
     w = initial_w
     n_iter = 0
-    while n_iter < max_iters:
+    min_change_threshold = 10e-4
+    last_change = 1 # in loss function
+    loss = compute_lossFunction(y, tx, w)
+    while last_change > min_change_threshold and n_iter < max_iters:
         for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size,shuffle=True):
-            if n_iter >= max_iters:
+            if n_iter >= max_iters or last_change < min_change_threshold:
                 break
                 
             gradient = compute_gradientFunction(minibatch_y, minibatch_tx, w)
             w = w - gamma*gradient
             
+            old_loss = loss
             loss = compute_lossFunction(y, tx, w)
             # store
             #ws.append(np.copy(w))
             #losses.append(loss)
         
+            last_change = abs(loss - old_loss)
             if n_iter % print_step == 0:
-                print(SGD_string + "Gradient Descent({bi}/{ti}): loss={l}, w0={w0}, w1={w1}".format(
-                      bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
+                print(SGD_string + "Gradient Descent({bi}/{ti}): changeInLoss={lc}, loss={l}, w0={w0}, w1={w1}".format(
+                      lc = last_change, bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
         
             n_iter = n_iter + 1
+            
     
     return w
     #return losses, ws
@@ -144,12 +150,13 @@ def ridge_regression_method(y, tx, lamb, gamma, max_iters, compute_gradientFunct
         
     # TODO: lambda/2N?
     compute_ridge_gradient = lambda y1, tx1, w: compute_gradientFunction(y1, tx1, w) + 2 * lamb * w
+    compute_ridge_lossFunction = lambda y1, tx1, w: compute_lossFunction(y1, tx1, w) + lamb * sum(w**2)
     
     initial_w = np.array([10]*M)
     
     w = stochastic_gradient_descent(y, tx, initial_w, batch_size, max_iters, 
                                     gamma, compute_gradientFunction=compute_ridge_gradient,
-                                    compute_lossFunction=compute_lossFunction)
+                                    compute_lossFunction=compute_ridge_lossFunction)
     
     return w
 

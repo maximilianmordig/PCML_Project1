@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 from build_polynomial import build_poly
-from model_learning import ridge_regression_least_squares, least_squares
 from costs import compute_mse_loss
+
+
+def split_data(x, y, ratio, seed=1):
+    """split the dataset based on the split ratio."""
+    # set seed
+    np.random.seed(seed)
+    p = np.random.permutation(len(x))
+    x_tr, x_te = np.split(x[p], [int(ratio*len(x))])
+    y_tr, y_te = np.split(y[p], [int(ratio*len(x))])
+    return x_tr, y_tr, x_te, y_te
+
 
 def build_k_indices(y, k_fold, seed):
     """build k groups of indices for k-fold."""

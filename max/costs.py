@@ -43,6 +43,10 @@ def compute_logistic_loss(y, tx, w):
     #print( np.sum((y==1) * np.log(sigmoid(tx.dot(w)))) )
     #print((y==1).T.dot(np.log(sigmoid(tx.dot(w)))).shape)
     
+    #print("1: {}".format(tx.shape))
+    #print(((y == 1) * tx.dot(w)).shape)
+    #print("1: {}".format( ((y == 1) * tx.dot(w)).shape ))
+    #print("2: {}".format( (ln_1_p_exp_x(tx.dot(w))).shape ))
     res = np.sum( ln_1_p_exp_x(tx.dot(w)) - (y == 1) * tx.dot(w) )
     
     return res
@@ -65,7 +69,7 @@ def compute_logistic_gradient(y, tx, w):
     """compute the gradient of loss."""
     
     res = tx.T.dot(sigmoid(tx.dot(w)) - y)
-    print(res.T.dot(res))
+    #print(res.T.dot(res))
     return res
 
 def sigmoid(t):
