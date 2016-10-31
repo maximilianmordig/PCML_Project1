@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.13)  31 OCT 2016 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.13)  31 OCT 2016 23:05
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -303,6 +303,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 18.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 18.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 23.
 
 <Images/NAPerColumn.pdf, id=33, 433.62pt x 289.08pt>
 File: Images/NAPerColumn.pdf Graphic file (type pdf)
@@ -310,12 +312,18 @@ File: Images/NAPerColumn.pdf Graphic file (type pdf)
 <use Images/NAPerColumn.pdf>
 Package pdftex.def Info: Images/NAPerColumn.pdf used on input line 32.
 (pdftex.def)             Requested size: 243.91125pt x 162.60709pt.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 40.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./Images/NAPerColumn.pdf>]
+<Images/training_testing_success_rate.pdf, id=86, 433.62pt x 289.08pt>
+File: Images/training_testing_success_rate.pdf Graphic file (type pdf)
+
+<use Images/training_testing_success_rate.pdf>
+Package pdftex.def Info: Images/training_testing_success_rate.pdf used on input
+ line 65.
+(pdftex.def)             Requested size: 243.91125pt x 162.60709pt.
+ [2 <./Images/training_testing_success_rate.pdf>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -327,24 +335,26 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 77.
-[2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 77.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
+[3
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
  (./latex-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 77.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 77.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
 Package rerunfilecheck Info: File `latex-template.out' has not changed.
 (rerunfilecheck)             Checksum: 2287DAA6882A5CCCF8C579F61AA052E5;535.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 77.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 87.
  ) 
 Here is how much of TeX's memory you used:
- 5759 strings out of 493029
- 88869 string characters out of 6136234
- 177175 words of memory out of 5000000
- 9267 multiletter control sequences out of 15000+600000
+ 5767 strings out of 493029
+ 89121 string characters out of 6136234
+ 177358 words of memory out of 5000000
+ 9272 multiletter control sequences out of 15000+600000
  36514 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,8n,28p,1103b,311s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,8n,28p,1070b,311s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/
@@ -358,10 +368,10 @@ usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on latex-template.pdf (2 pages, 146380 bytes).
+Output written on latex-template.pdf (3 pages, 157353 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
- 91 compressed objects within 1 object stream
- 11 named destinations out of 1000 (max. 500000)
- 62 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 180 PDF objects out of 1000 (max. 8388607)
+ 103 compressed objects within 2 object streams
+ 13 named destinations out of 1000 (max. 500000)
+ 67 words of extra memory for PDF output out of 10000 (max. 10000000)
 
