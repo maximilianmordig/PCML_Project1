@@ -24,7 +24,7 @@ def build_k_indices(y, k_fold, seed):
                  for k in range(k_fold)]
     return np.array(k_indices)
 
-def cross_validation(y, x, k_indices, k, lambda_, degree, 
+def cross_validation(y, x, k_indices, k, lambda_, degree, cross_features_degree,
                      compute_weightsFunction, compute_lossFunction):
     """
     selects kth group of indices as test set and rest as training set,
@@ -33,17 +33,7 @@ def cross_validation(y, x, k_indices, k, lambda_, degree,
     returns losses of training set and testing set with the specified function
     """
     
-    #if compute_weightsFunction is None:
-    #    print("Taking default least squares stochastic gradient descent")
-    #    compute_weightsFunction = lambda y, tx, lambda_: least_squares(
-    #        y, tx, gamma=gamma, max_iters=max_iters, batch_size=200)
-    
-    #if compute_lossFunction is None:
-    #    print("Taking default least squares loss function")
-    #    compute_lossFunction = compute_mse_loss # without lambda!
-        
-        
-        
+
     # determine the indices in the training set and those in the test set
     tr_indices = np.concatenate( (k_indices[:k].ravel(), k_indices[k+1:].ravel()) )
     te_indices = k_indices[k]
@@ -55,8 +45,8 @@ def cross_validation(y, x, k_indices, k, lambda_, degree,
     y_te = y[te_indices]
     
     # build polynomial features
-    x_poly_tr = build_poly(x_tr, degree)
-    x_poly_te = build_poly(x_te, degree)
+    x_poly_tr = build_poly(x_tr, degree, cross_features_degree)
+    x_poly_te = build_poly(x_te, degree, cross_features_degree)
     
     
     # find weights using the training data only
@@ -68,7 +58,7 @@ def cross_validation(y, x, k_indices, k, lambda_, degree,
     
     return loss_tr, loss_te
 
-def k_cross_validation(y, x, k_fold, lambda_, degree, seed, 
+def k_cross_validation(y, x, k_fold, lambda_, degree, cross_features_degree, seed, 
                        compute_weightsFunction, compute_lossFunction):
     """ do k-fold validation for input data (x,y) and polynomial features up
         to given degree and with regularization constant lambda_
@@ -85,7 +75,7 @@ def k_cross_validation(y, x, k_fold, lambda_, degree, seed,
         
     # compute training error and testing error for each of k_fold possibilities
     for k in range(k_fold):
-        (mse_tr, mse_te) = cross_validation(y, x, k_indices, k, lambda_, degree, 
+        (mse_tr, mse_te) = cross_validation(y, x, k_indices, k, lambda_, degree, cross_features_degree, 
                                             compute_weightsFunction=compute_weightsFunction, 
                                             compute_lossFunction=compute_lossFunction)
         losses_tr.append(mse_tr)

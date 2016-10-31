@@ -5,7 +5,7 @@ from helpers import batch_iter
 
 # 'standard' gradient descent
 def gradient_descent(y, tx, initial_w, max_iters, gamma, compute_gradientFunction, compute_lossFunction): 
-    """Gradient descent algorithm."""
+    """Gradient descent algorithm. see doc of stochastic_gradient_descent"""
     
     N = tx.shape[0]
     
@@ -18,19 +18,16 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma, compute_gradientFunctio
 # stochastic gradient descent, max_epochs is the maximum number of iterations
 # at most max_iters iterations (calls a sample of size 'batch_size' up to 'max_iters' times)
 def stochastic_gradient_descent(
-        y, tx, initial_w, batch_size, max_iters, gamma, compute_gradientFunction, compute_lossFunction):
-    """Stochastic gradient descent algorithm."""
+        y, tx, initial_w, batch_size, max_iters, gamma, compute_gradientFunction, compute_lossFunction, stopMinThreshold=True):
+    """Stochastic gradient descent algorithm.
+    batch_size for stochastic gradient descent
+    max_iters: stop after this number of times of batch calls
+    gamma: step size
+    stopMinThreshold: if iteration stops once loss changes by less than 10e-4, otherwise 10e-16 (practically never)
     
-    #if compute_gradientFunction is None:
-    #    print("Taking default least squares gradient")
-    #    compute_gradientFunction = compute_mse_gradient
-    
-    #if compute_lossFunction is None:
-    #    print("Taking default least squares loss function")
-    #    compute_lossFunction = compute_mse_loss # without lambda!
-    
+    """
         
-    N = y.shape[0]
+    N = tx.shape[0]
     isSGD = (batch_size < N)
     SGD_string = "Stochastic " if isSGD else ""
         
@@ -43,15 +40,28 @@ def stochastic_gradient_descent(
     
     w = initial_w
     n_iter = 0
-    min_change_threshold = 10e-4
+    min_change_threshold = 10e-4 if stopMinThreshold else -1
     last_change = 1 # in loss function
     loss = compute_lossFunction(y, tx, w)
+    
     while last_change > min_change_threshold and n_iter < max_iters:
         for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size,shuffle=True):
             if n_iter >= max_iters or last_change < min_change_threshold:
                 break
                 
             gradient = compute_gradientFunction(minibatch_y, minibatch_tx, w)
+            
+            deviation = 10e-8
+            approximatedGradient = np.zeros(gradient.shape)
+            for i in range(len(approximatedGradient)):
+                w1 = w
+                w2 = w
+                w1[i] = w1[i] + deviation
+                w2[i] = w2[i] - deviation
+                approximatedGradient[i] = ( compute_lossFunction(y, tx, w1) - compute_lossFunction(y, tx, w2) )/(2*deviation)
+                
+            #print("Difference: {}".format(np.max(np.abs(approximatedGradient - gradient))))
+            
             w = w - gamma*gradient
             
             old_loss = loss
@@ -98,7 +108,7 @@ def exact_ridge_regression_least_squares(y, tx, lamb):
 def least_squares_weights(y, tx, gamma, max_iters, batch_size=None):
     """calculate the least squares solution."""
     
-    return ridge_regression_least_squares(y, tx, lamb=0, gamma=gamma, 
+    return ridge_regression_least_squares_weights(y, tx, lamb=0, gamma=gamma, 
                                           max_iters=max_iters, batch_size=batch_size)
 
 
@@ -159,5 +169,3 @@ def ridge_regression_method(y, tx, lamb, gamma, max_iters, compute_gradientFunct
                                     compute_lossFunction=compute_ridge_lossFunction)
     
     return w
-
-# implements logistic regression

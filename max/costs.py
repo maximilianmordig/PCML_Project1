@@ -33,7 +33,7 @@ def compute_mae_gradient(y, tx, w):
     return 1/N * tx.T.dot(np.sign(tx.dot(w) - y))
 
 
-def compute_logistic_loss(y, tx, w):
+def compute_logistic_loss_old(y, tx, w):
     """compute the cost by negative log likelihood."""
     
     # problem with large numbers
@@ -43,34 +43,77 @@ def compute_logistic_loss(y, tx, w):
     #print( np.sum((y==1) * np.log(sigmoid(tx.dot(w)))) )
     #print((y==1).T.dot(np.log(sigmoid(tx.dot(w)))).shape)
     
-    #print("1: {}".format(tx.shape))
-    #print(((y == 1) * tx.dot(w)).shape)
-    #print("1: {}".format( ((y == 1) * tx.dot(w)).shape ))
-    #print("2: {}".format( (ln_1_p_exp_x(tx.dot(w))).shape ))
     res = np.sum( ln_1_p_exp_x(tx.dot(w)) - (y == 1) * tx.dot(w) )
     
     return res
-
-# returns ln(1 + exp(x))
-def ln_1_p_exp_x(x):
-    
-    x_gt10 = (x >= 10)
-    x_st10 = (x < 10)
-    
-    res = np.zeros(x.shape)
-    res[x_gt10] = x[x_gt10]
-    res[x_st10] = np.log(1 + np.exp(x[x_st10]))
-    
-    return res
     
 
 
-def compute_logistic_gradient(y, tx, w):
+def compute_logistic_gradient_old(y, tx, w):
     """compute the gradient of loss."""
     
     res = tx.T.dot(sigmoid(tx.dot(w)) - y)
     #print(res.T.dot(res))
     return res
+
+
+
+def logistic_function(X):
+    """Computes logistic function for x"""
+    
+    y = np.zeros(len(X))
+    for i in range(len(X)):
+        if X[i] > 30:
+            y[i] = 1
+        elif X[i] < -30:
+            y[i] = 0
+        else:
+            y[i] = 1/(1 + np.exp(-X[i]))
+
+    return y
+
+def logistic_function_scalar(x):
+    if x > 30:
+        y = 1
+    elif x < -30:
+        y = 0
+    else:
+        y = 1/(1 + np.exp(-x))
+
+    return y
+
+
+def compute_logistic_gradient(y, tx, w):
+    """Compute the stochastic gradient for batch data for logistic regression"""
+    n = len(y)
+    grad = np.zeros(tx.shape[1])
+    for i in range(n):
+        z = logistic_function_scalar(np.dot(tx[i,:],w)) - y[i]
+        grad = grad + z*tx[i,:]
+    grad = grad
+    return grad/n
+
+def compute_logistic_loss(y, tx, w):
+    ll = 0
+    n = len(y)
+    
+    for i in range(n):
+        # print (tx[i,:].shape)
+        # print (w.shape)
+        z = (np.dot(tx[i,:].T,w))
+        # print (z)
+        if z > 100:
+            ll = ll + z - y[i]*z
+        else:
+            ll = ll + np.log(1 + np.exp(z)) - y[i]*z
+        # print (z)
+        # print (y[i])
+        # print(np.log(1 + np.exp(z)) + y[i]*z)
+        # input("a")
+    return ll
+
+
+
 
 def sigmoid(t):
     """apply sigmoid function on t."""
@@ -85,5 +128,17 @@ def sigmoid(t):
 
     #print(res.shape)
     #print(np.where(res == np.nan))
+    return res
+
+# returns approximation of ln(1 + exp(x))
+def ln_1_p_exp_x(x):
+    
+    x_gt10 = (x >= 10)
+    x_st10 = (x < 10)
+    
+    res = np.zeros(x.shape)
+    res[x_gt10] = x[x_gt10]
+    res[x_st10] = np.log(1 + np.exp(x[x_st10]))
+    
     return res
 
