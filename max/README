@@ -1,3 +1,5 @@
 The file run.py is a symbolic link to Task.ipynb to run in a Jupyter notebook. It includes data exploration.
 
 If you wish to find the version that created the csv, you have to go back in the git version system (to git commit 281b62d10ce9c6b5ef4af4162005a5549603cd6b) changing the cross_feature_degree 4 to 3 in file build_polynomial.py and then running Task.ipynb.
+
+The file 'implementations.py' you want is actually 'implementations_asyouwant.py'.

@@ -8,7 +8,7 @@
 \title{PCML Project 1}
 
 \author{
-  Maximilian Mordig, Yoam, ...\\
+  Yoam Hazot, Maximilian Mordig, Timon Zimmermann\\
   \textit{EPFL Lausanne}
 }
 
@@ -74,9 +74,9 @@ We also tried to apply (penalised) logistic regression, but we did not get very 
 
 \subsection{Possibility for Improvements and Outlook}
 We obtained $81\%$ success with our method presented here, which is not that bad.
-However, the machine learning approach to select the features appears very brutal to us. It was definitely a good idea to introduce cross-feature features, but greater care should be taken, which features to combine as this might significantly reduce the model complexity. We had another implementation of logistic regression (but forgot to commit it), where we achieved 80\%, which appears strange to us because logistic regression should be better.
+However, the machine learning approach to select the features appears very brutal to us. It was definitely a good idea to introduce cross-feature features, but greater care should be taken, which features to combine as this might significantly reduce the model complexity. We had another implementation of logistic regression (but forgot to commit it), where we achieved 80\%, which appears strange to us because logistic regression as a classification method should outperform linear regression.
 
-With the polynomial features, we are for instance not able to capture a more complex relationship like an exponential or a logarithm. It would definitely prove useful to understand the physical significance of the provided measurements and develop an approximate parametrized physical model which we then fit with machine learning. For instance, we learned in the end that the "JET" parameter was a categorical variable and that it yielded much better results if we built a new model for each value of this variable (but we didn't have enough time in the end). In the end, we are not content with $81\%$ because we would at least need $99\%$ prediction accuracy because other indirect methods of detecting the Higgs boson are scarce.
+With the polynomial features, we are for instance not able to capture a more complex relationship like an exponential or a logarithm. It would definitely prove useful to understand the physical significance of the provided measurements and develop an approximate parametrized physical model which we then fit with machine learning. For instance, we learned in the end that the "JET" parameter was a categorical variable and that it yielded much better results if we built a new model for each value of this variable (but we did not have enough time to include it). In the end, we are rather not content with $81\%$ because we would at least need $99\%$ prediction accuracy because other indirect methods of detecting the Higgs boson are scarce.
 
 
 
